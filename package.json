@@ -1,0 +1,17 @@
+{
+  "name": "discord-minecraft-bot",
+  "version": "1.0.0",
+  "description": "Minecraft sunucu icin Discord botu",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "dependencies": {
+    "discord.js": "^14.16.3",
+    "node-fetch": "^2.7.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
