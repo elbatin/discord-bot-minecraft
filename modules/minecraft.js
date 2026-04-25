@@ -3,11 +3,13 @@ const { ActivityType } = require('discord.js');
 
 async function getSunucuDurumu(ip, port) {
   try {
-    const res = await fetch(`https://api.mcsrvstat.us/2/${ip}:${port}`, {
+    const hedef = port && port !== 25565 ? `${ip}:${port}` : ip;
+    const res = await fetch(`https://api.mcsrvstat.us/3/${hedef}`, {
       timeout: 10000
     });
     if (!res.ok) return { online: false };
-    return await res.json();
+    const data = await res.json();
+    return data;
   } catch (err) {
     console.error('[MC] API isteği başarısız:', err.message);
     return { online: false };
@@ -23,7 +25,7 @@ async function presenceGuncelle(client, config) {
           {
             name: 'custom',
             type: ActivityType.Custom,
-            state: `🎮 ${config.minecraft.ip} | ${durum.players.online}/${durum.players.max} oyuncu`
+            state: `${config.minecraft.ip} | ${durum.players.online} oyuncu`
           }
         ],
         status: 'online'
@@ -34,7 +36,7 @@ async function presenceGuncelle(client, config) {
           {
             name: 'custom',
             type: ActivityType.Custom,
-            state: `🔴 ${config.minecraft.ip} | Sunucu Offline`
+            state: `${config.minecraft.ip} | Offline`
           }
         ],
         status: 'dnd'

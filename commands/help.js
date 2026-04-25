@@ -10,12 +10,30 @@ module.exports = {
       .setDescription('Kullanılabilir tüm komutlar ve sistemler:')
       .addFields(
         {
-          name: '🖥️ Prefix Komutları (`' + config.prefix + '`)',
+          name: '🖥️ Genel Komutlar',
           value: [
-            '`' + config.prefix + 'ip` — Minecraft sunucu IP adresini gösterir',
-            '`' + config.prefix + 'site` — Web sitesi linkini gösterir',
-            '`' + config.prefix + 'oy` — Oy verme linkini gösterir',
-            '`' + config.prefix + 'help` — Bu menüyü açar',
+            `\`${config.prefix}ip\` — Minecraft sunucu IP adresini gösterir`,
+            `\`${config.prefix}site\` — Web sitesi linkini gösterir`,
+            `\`${config.prefix}oy\` — Oy verme linkini gösterir`,
+            `\`${config.prefix}help\` — Bu menüyü açar`,
+          ].join('\n')
+        },
+        {
+          name: '🔨 Moderasyon Komutları',
+          value: [
+            `\`${config.prefix}ban @kullanıcı [sebep]\` — Kullanıcıyı banlar`,
+            `\`${config.prefix}kick @kullanıcı [sebep]\` — Kullanıcıyı atar`,
+            `\`${config.prefix}timeout @kullanıcı <süre> [sebep]\` — Timeout uygular (60s/5m/10m/30m/1s/1g/1h)`,
+            `\`${config.prefix}unban <id> [sebep]\` — Banı kaldırır`,
+            `\`${config.prefix}temizle <1-100> [@kullanıcı]\` — Mesajları temizler`,
+          ].join('\n')
+        },
+        {
+          name: '🔑 Yetkilendirme',
+          value: [
+            `\`${config.prefix}yetki ver @kullanıcı/rol\` — Moderasyon yetkisi verir`,
+            `\`${config.prefix}yetki al @kullanıcı/rol\` — Moderasyon yetkisini alır`,
+            `\`${config.prefix}yetki liste\` — Yetkili kullanıcı/rol listesi`,
           ].join('\n')
         },
         {
@@ -28,11 +46,11 @@ module.exports = {
         },
         {
           name: '📊 Minecraft Entegrasyonu',
-          value: `Sunucu IP: \`${config.minecraft.ip}\`\nBotun durumu anlık oyuncu sayısını gösterir.`
+          value: `Sunucu IP: \`${config.minecraft.ip}\`\nBotun durumu ve sesli kanal anlık oyuncu sayısını gösterir.`
         },
         {
-          name: '⏱️ Cooldown & Otomatik Silme',
-          value: "Komutlar **10 saniye** cooldown'a tabidir.\nBot yanıtları **5 dakika** sonra otomatik silinir."
+          name: '📋 Log Sistemi',
+          value: 'Mesaj silme/düzenleme · Üye giriş/çıkış · Rol işlemleri · Kanal işlemleri · Ban/Kick/Timeout — Hepsi ayrı kanallara embedli olarak iletilir.'
         }
       )
       .setFooter({ text: 'Made by Batın • elbatin.com' })

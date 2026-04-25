@@ -1,4 +1,4 @@
-const { ticketAc, ticketKapat } = require('../modules/ticket');
+const { ticketAc, ticketModalOnayla, ticketKapat } = require('../modules/ticket');
 const { basvuruModalAc, basvuruGonder, basvuruOnayla, basvuruReddet } = require('../modules/basvuru');
 
 module.exports = {
@@ -41,6 +41,9 @@ module.exports = {
       if (interaction.isModalSubmit()) {
         if (interaction.customId === 'basvuru_modal') {
           return await basvuruGonder(interaction, config);
+        }
+        if (interaction.customId.startsWith('ticket_modal:')) {
+          return await ticketModalOnayla(interaction, config);
         }
       }
     } catch (err) {

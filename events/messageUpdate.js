@@ -7,6 +7,6 @@ module.exports = {
     if (eskiMesaj.author?.bot) return;
     if (!eskiMesaj.author) return;
     if (eskiMesaj.content === yeniMesaj.content) return;
-    await logGonder(eskiMesaj.guild, config, mesajDuzenlendi(eskiMesaj, yeniMesaj));
+    await logGonder(eskiMesaj.guild, config, mesajDuzenlendi(eskiMesaj, yeniMesaj), 'mesaj');
   }
 };

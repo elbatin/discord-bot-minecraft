@@ -1,6 +1,6 @@
 {
-  "token": "BOT_TOKEN_BURAYA / YOUR_BOT_TOKEN_HERE",
-  "guildId": "SUNUCU_ID / SERVER_ID",
+  "token": "BOT_TOKEN_BURAYA",
+  "guildId": "SUNUCU_ID",
   "prefix": ".",
 
   "minecraft": {
@@ -10,26 +10,48 @@
   },
 
   "channels": {
-    "log":      "LOG_KANAL_ID / LOG_CHANNEL_ID",
-    "hosgeldin":"HOSGELDIN_KANAL_ID / WELCOME_CHANNEL_ID",
-    "ticket":   "TICKET_KANAL_ID / TICKET_CHANNEL_ID",
-    "basvuru":  "BASVURU_KANAL_ID / APPLICATION_CHANNEL_ID",
-    "yetkili":  "YETKILI_KANAL_ID / STAFF_CHANNEL_ID"
+    "log": {
+      "genel":      "LOG_KANAL_ID",
+      "mesaj":      "MESAJ_LOG_KANAL_ID",
+      "uye":        "UYE_LOG_KANAL_ID",
+      "moderasyon": "MOD_LOG_KANAL_ID",
+      "rol":        "ROL_LOG_KANAL_ID",
+      "kanal":      "KANAL_LOG_KANAL_ID"
+    },
+    "hosgeldin": "HOSGELDIN_KANAL_ID",
+    "ticket":    "TICKET_KANAL_ID",
+    "basvuru":   "BASVURU_KANAL_ID",
+    "yetkili":   "YETKILI_KANAL_ID"
   },
 
   "roles": {
-    "otorol":  ["ROL_ID_1", "ROL_ID_2"],
-    "yetkili": "YETKILI_ROL_ID / STAFF_ROLE_ID",
-    "admin":   "ADMIN_ROL_ID / ADMIN_ROLE_ID"
+    "otorol":    ["ROL_ID_1", "ROL_ID_2"],
+    "otorolBot": ["BOT_ROL_ID"],
+    "yetkili":   "YETKILI_ROL_ID",
+    "admin":     "ADMIN_ROL_ID"
   },
 
   "voiceChannels": {
-    "oyuncuSayisi": "SESLI_KANAL_ID / VOICE_CHANNEL_ID"
+    "oyuncuSayisi": "SESLI_KANAL_ID"
   },
 
   "ticket": {
-    "kategori":   "TICKET_KATEGORI_ID / TICKET_CATEGORY_ID",
+    "kategori":    "TICKET_KATEGORI_ID",
     "kategoriler": ["Destek", "Odeme", "Sikayet"]
+  },
+
+  "hosgeldin": {
+    "baslik": "👋 Hoş Geldin!",
+    "mesaj":  "{kullanici} sunucumuza hoş geldin!\n\nKuralları okumayı unutma. İyi oyunlar! 🎮",
+    "renk":   "#00FF88",
+    "resim":  ""
+  },
+
+  "gorusuruz": {
+    "aktif":  true,
+    "baslik": "👋 Görüşürüz!",
+    "mesaj":  "**{kullanici}** sunucudan ayrıldı. Görüşürüz! 👋",
+    "renk":   "#FFA500"
   },
 
   "site": {

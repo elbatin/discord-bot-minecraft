@@ -4,6 +4,9 @@ const {
   ButtonBuilder,
   ButtonStyle,
   StringSelectMenuBuilder,
+  ModalBuilder,
+  TextInputBuilder,
+  TextInputStyle,
   ChannelType,
   PermissionFlagsBits,
   AttachmentBuilder
@@ -131,7 +134,6 @@ async function ticketSecMenuGoster(interaction, config) {
 async function ticketAc(interaction, config) {
   const guild = interaction.guild;
   const kategori = interaction.values[0];
-  const kanalAdi = kategori.split('_')[0];
 
   // Kullanıcının zaten açık ticketi var mı?
   const mevcutKanal = guild.channels.cache.find(
@@ -145,6 +147,32 @@ async function ticketAc(interaction, config) {
       flags: 64
     });
   }
+
+  // Modal göster — sebep girmesi için
+  const modal = new ModalBuilder()
+    .setCustomId(`ticket_modal:${kategori}`)
+    .setTitle('🎫 Destek Talebi');
+
+  const sebepInput = new TextInputBuilder()
+    .setCustomId('ticket_sebep')
+    .setLabel('Sorununuzu kısaca açıklayın')
+    .setStyle(TextInputStyle.Paragraph)
+    .setPlaceholder('Örn: Satın aldığım paketi almadım, sipariş numaram: #1234')
+    .setMinLength(10)
+    .setMaxLength(1000)
+    .setRequired(true);
+
+  modal.addComponents(new ActionRowBuilder().addComponents(sebepInput));
+  await interaction.showModal(modal);
+}
+
+async function ticketModalOnayla(interaction, config) {
+  const kategori = interaction.customId.replace('ticket_modal:', '');
+  const kanalAdi = kategori.split('_')[0];
+  const sebep = interaction.fields.getTextInputValue('ticket_sebep');
+  const guild = interaction.guild;
+
+  await interaction.deferReply({ flags: 64 });
 
   const sayac = getTicketSayac(kanalAdi);
   const yeniKanalAdi = `${kanalAdi}-${sayac}`;
@@ -185,9 +213,8 @@ async function ticketAc(interaction, config) {
   const embed = new EmbedBuilder()
     .setColor('#5865F2')
     .setTitle(`🎫 Ticket #${sayac} — ${kanalAdi.charAt(0).toUpperCase() + kanalAdi.slice(1)}`)
-    .setDescription(
-      `Merhaba ${interaction.user}, ticketınız oluşturuldu!\n\nYetkililerimiz en kısa sürede size yardımcı olacaktır.`
-    )
+    .setDescription(`Merhaba ${interaction.user}, destek talebiniz oluşturuldu!\n\nYetkililerimiz en kısa sürede size yardımcı olacaktır.`)
+    .addFields({ name: '📋 Açıklama', value: sebep })
     .setFooter({ text: 'Ticketı kapatmak için aşağıdaki butona tıklayın.' })
     .setTimestamp();
 
@@ -205,9 +232,8 @@ async function ticketAc(interaction, config) {
     components: [kapatRow]
   });
 
-  await interaction.reply({
-    content: `Ticketınız oluşturuldu: ${yeniKanal}`,
-    flags: 64
+  await interaction.editReply({
+    content: `✅ Ticketınız oluşturuldu: ${yeniKanal}`
   });
 }
 
@@ -257,8 +283,10 @@ async function ticketKapat(interaction, config) {
     )
     .setTimestamp();
 
-  // Log kanalına gönder
-  const logKanal = guild.channels.cache.get(config.channels.log);
+  // Log kanalına gönder (string veya obje formatını destekle)
+  const logConfig = config.channels?.log;
+  const logKanalId = typeof logConfig === 'object' ? (logConfig.genel || Object.values(logConfig)[0]) : logConfig;
+  const logKanal = logKanalId ? guild.channels.cache.get(logKanalId) : null;
   if (logKanal) {
     await logKanal.send({ embeds: [embed], files: [ek] }).catch(() => {});
   }
@@ -280,4 +308,4 @@ async function ticketKapat(interaction, config) {
   setTimeout(() => kanal.delete().catch(() => {}), 3000);
 }
 
-module.exports = { ticketSetup, ticketSecMenuGoster, ticketAc, ticketKapat };
+module.exports = { ticketSetup, ticketSecMenuGoster, ticketAc, ticketModalOnayla, ticketKapat };
